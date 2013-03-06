@@ -9,9 +9,9 @@ public class Global {
 	
 	public Global()
 	{
-		map_width = 20;
-		map_height = 20;
-		world_width = 1;
-		world_height = 1;
+		map_width = 5;
+		map_height = 5;
+		world_width = 2;
+		world_height = 2;
 	}
 }

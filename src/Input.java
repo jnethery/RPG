@@ -5,7 +5,7 @@ public class Input {
 	private String input;
 	private final Scanner in = new Scanner(System.in);
 	
-	public void getInput(Entity player)
+	public void getInput(Map map, Entity player)
 	{
 		input = in.nextLine();
 		input = input.toUpperCase();
@@ -14,7 +14,7 @@ public class Input {
 		
 		if (input.contains("MOVE") || input.contains("MV"))
 		{
-			player.movement.Move(player.name, dirs[0], dirs[1]);
+			player.movement.Move(map, player, dirs[0], dirs[1]);
 		}
 		else if (input.compareTo("QUIT") == 0)
 		{

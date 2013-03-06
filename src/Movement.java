@@ -1,14 +1,9 @@
 
 public class Movement {
-	private int last_x;
-	private int last_y;
-	private int x;
-	private int y;
-	
-	public Movement()
-	{
-		//last_x = last_y = x = y = 0;
-	}
+	public int last_x;
+	public int last_y;
+	public int x;
+	public int y;
 	
 	public String toString(String name)
 	{
@@ -55,12 +50,49 @@ public class Movement {
 		MessageQueue.addMessage(toString(name));
 	}
 	
-	public void Move(String name, int xDelta, int yDelta)
+	public void Move(Map map, Entity e, int xDelta, int yDelta)
 	{
 		last_x = x;
 		last_y = y;
-		x += xDelta;
-		y += yDelta;
-		addMoveMessage(name);
+		if (x + xDelta < Global.map_width && x + xDelta >= 0 && y + yDelta < Global.map_height && y + yDelta >= 0)
+		{
+			x += xDelta;
+			y += yDelta;
+		}
+		else
+		{
+			switchMap(map, e, xDelta, yDelta);
+		}
+		addMoveMessage(e.name);
+	}
+	
+	public void switchMap(Map map, Entity e, int xDelta, int yDelta)
+	{
+		int i = 0, j = 0;
+		if (x + xDelta == Global.map_width && map.index[0] + 1 < Global.world_width)
+		{
+			i++;
+			last_x = -1;
+			x = 0;
+		}
+		if (y + yDelta == Global.map_height && map.index[1] + 1 < Global.world_height)
+		{
+			j++;
+			last_y = -1;
+			y = 0;
+		}
+		if (x + xDelta < 0 && map.index[0] - 1 >= 0)
+		{
+			i--;
+			last_x = Global.map_width;
+			x = Global.map_width - 1;
+		}
+		if (y + yDelta < 0 && map.index[1] - 1 >= 0)
+		{
+			j--;
+			last_y = Global.map_height;
+			y = Global.map_height - 1;
+		}
+		World.addEntityToMap(map, e, i, j);
 	}
 }
